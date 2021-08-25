@@ -65,12 +65,49 @@ def square(length,centre):
     return [(new_x_0,new_y_0),
             (new_x_1,new_y_1)]
 
-def hexagon(length,centre):
-    #takes in cartesian of origin and certain required length
-    #Outputs coordinates of all points
-    pass
+def deg_to_rad(degrees):
+    radians = (degrees/180)*math.pi
+    return radians
 
-# print(mat_size(2,2,1))
+def hexagon(length,centre,angle):
+    #angle(in degrees): angle of tilt of first point wrt to centre
+    radians = [angle,60,60]
+    for i in range(3):
+        radians[i]=deg_to_rad(radians[i])
+
+    output = []
+
+    translation_vector_0 = [length,0]
+    rotation_vector=[]
+
+    for j in radians:
+        rotation_vector.append(
+            (
+                (math.cos(j),-1*math.sin(j)),
+                (math.sin(j),   math.cos(j))
+            )
+        )   
+    
+    translation_vector_1 = np.matmul(
+        rotation_vector[0],translation_vector_0
+    )
+    
+    point_1=(round(centre[0]+translation_vector_1[0],5),round(centre[1]+translation_vector_1[1],5))
+    output.append(point_1)
+    translation_vector_2 = np.matmul(
+        rotation_vector[1],translation_vector_1
+    )
+    for k in range(5):
+        translation_vector_2 = np.matmul(
+            rotation_vector[2],translation_vector_2
+        )
+        point_1=(
+            round(point_1[0]+translation_vector_2[0],5),round(point_1[1]+translation_vector_2[1],5)
+        )
+    
+        output.append(point_1)
+    
+    return output
 
 def sketch_add(points_list):
     
