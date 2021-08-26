@@ -41,17 +41,16 @@ def generate_materials(lst): #lst is list of material
         #Format: [Young's Modulus, Poisson Ratio,Material Name,Section Name Placeholder]
 
     #Output of this function
-    output = lst 
+    output=[]
 
     for i in range(len(lst)): 
     
     #Generates material name and append to list for easy calling.
-        material_name = 'Material-'+str(i)
-        output[i][2] = material_name
+        material_name = lst[i][2]
 
-        section_name='Section-'+str(i)
-        output[i][3] = section_name
+        section_name='Section-'+material_name
 
+        output.append([material_name,section_name])
     #Inputs Material parameters into abaqus
         material_input(
             material_name,

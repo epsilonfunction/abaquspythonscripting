@@ -80,7 +80,9 @@ def twod_rectangle(point1_input,point2_input,index): #Inputs: Tuple only; int fo
 #         counter += 1
 
 
-def twod_polygon(name,point_input_list):
+def polygon(part_name,point_input_list,two_or_three_D,*threeDpara):
+
+    named_part=part_name
 
     length=len(point_input_list)
     counter=0
@@ -102,16 +104,36 @@ def twod_polygon(name,point_input_list):
 
         counter += 1
 
-    mdb.models['Model-1'].Part(
-        dimensionality=TWO_D_PLANAR,
-        name='Part-1',
-        type=DEFORMABLE_BODY
-    )
+    height,angle = 0,0
+    counter = 0
+    for i in threeDpara:
+        if counter == 0:
+            height = i
+        elif counter == 1:
+            angle = i
+        counter += 1
 
-    mdb.models['Model-1'].parts['Part-1'].BaseShell(
-        sketch=mdb.models['Model-1'].sketches['__profile__']
-    )
+    if two_or_three_D=='two':
+        mdb.models['Model-1'].Part(
+            dimensionality=TWO_D_PLANAR,
+            name=named_part,
+            type=DEFORMABLE_BODY
+        )
 
+        mdb.models['Model-1'].parts[named_part].BaseShell(
+            sketch=mdb.models['Model-1'].sketches['__profile__']
+        )
+    elif two_or_three_D=='three':
+        mdb.models['Model-1'].Part(
+            dimensionality=THREE_D,
+            name=named_part,
+            type=DEFORMABLE_BODY
+        )
+        mdb.models['Model-1'].parts[named_part].BaseSolidExtrude(
+            depth=height,
+            draftAngle=angle,
+            sketch=mdb.models['Model-1'].sketches['__profile__']        
+        )
     del mdb.models['Model-1'].sketches['__profile__']
 
 

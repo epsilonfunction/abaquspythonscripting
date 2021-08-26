@@ -38,7 +38,7 @@ import math
 #                 pass
 
 def deg_to_rad(degrees):
-    radians = (degrees/180)*math.pi
+    radians = (float(degrees)/float(180))*math.pi
     return radians
 
 def vector_rotate(angle,vector):
@@ -80,7 +80,7 @@ def matrix_centres(r,c,length,polygon_type):
         def findallhexagoncenter(centre,vector):
             vector_list = []
             for i in range(6):
-                translation_vector=vector_rotate(30+i*60, vector)
+                translation_vector=vector_rotate(i*60, vector)
                 new_centre=(
                     float(round(centre[0]+translation_vector[0],5)),
                     float(round(centre[1]+translation_vector[1],5))
