@@ -8,17 +8,23 @@ from material import *
 #List of Materials to be implemented here.
 #Each Material is a tuple represented as (Young's Modulus,Poisson Ratio) 
 
-def material_input(mat_name,E,v): #Takes in material's name, Young's Modulus(E), and Poisson Ratio
+def material_input(mat_name,para,category): #Takes in material's name, Young's Modulus(E), and Poisson Ratio
 
     #Adding Instance of material with the convention of: Material-{Index}
     mdb.models['Model-1'].Material(
         name = mat_name
     )
 
+    if category == 'ortho':
+        mdb.models['Model-1'].materials[mat_name].Elastic(
+            table=(para, ),
+            type=ORTHOTROPIC
+        )
     #Adding material parameters to material instance
-    mdb.models['Model-1'].materials[mat_name].Elastic(
-        table=((E,v), )
-    )
+    if category == 'simple':
+        mdb.models['Model-1'].materials[mat_name].Elastic(
+            table=((E,v), )
+        )
 
     #Adding name
     return
@@ -33,7 +39,7 @@ def sectioning (mat_name,section_name):
     # print(section_name+"has been added")
 
 #Outputs list of material
-def generate_materials(lst): #lst is list of material
+def generate_materials(lst,cat): #lst is list of material
     #Input: List of material properties
         #Format: [Young's Modulus, Poisson Ratio,Material Name Placeholder,Section Name Placeholder] 
 
@@ -55,7 +61,7 @@ def generate_materials(lst): #lst is list of material
         material_input(
             material_name,
             lst[i][0],
-            lst[i][1]
+            cat
         )
 
         # print(section_name+"has not been added")

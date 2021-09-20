@@ -73,63 +73,77 @@ def matrix_centres(r,c,length,polygon_type):
     
         return output
     
-    elif polygon_type == 'hexagon':
+    elif polygon_type == 'hexagon': #two depth deep of all centres
         vector = (0,0.86603*length*2)
-        counter = 0
+        counter = 1
 
         def findallhexagoncenter(centre,vector):
             vector_list = []
             for i in range(6):
-                translation_vector=vector_rotate(i*60, vector)
+                translation_vector=vector_rotate(30+i*60, vector)
                 new_centre=(
                     float(round(centre[0]+translation_vector[0],5)),
                     float(round(centre[1]+translation_vector[1],5))
                 )
                 vector_list.append(new_centre)
             return vector_list
+        def elim_dupes(arr):
+            output = list(dict.fromkeys(arr))
+            return output
 
-        first_depth=findallhexagoncenter(origin,vector)
-        output.append(first_depth)
+        # first_depth=findallhexagoncenter(origin,vector)
+        # output.append(first_depth)
+        
+        output.append([origin])
+        prev_depth_1=[]
+        prev_depth_2=[origin]
+        while counter <= r:
+            curr_depth = []
+            if counter == 1:
+                curr_depth=findallhexagoncenter(origin,vector)
+        
+                output.append(curr_depth)
+                prev_depth_1=curr_depth
 
-    #     while counter <= r:
-    #         if counter == 0:
-    #             listing=findallhexagoncenter((0,0),vector)
-    #             # print(listing)
-    #             output.append(listing)
-
-    #         else:
-    #             to_add = []
-    #             check_list=[]
-    #             # print(output[counter-1])
-    #             for i in output[counter-1]:
-    #                 listing = findallhexagoncenter(i,vector)
-    #                 check_list.append(listing)
-
-    #             if counter == 1:
-    #                 for j in check_list:
-    #                     for k in j:
-    #                         if k not in output[counter-1] or not (0.0, 0.0):
-    #                             to_add.append(k)
-    #             else:
-    #                 for j in check_list:
-    #                     if j not in output[counter-1] or output[counter-2]:
-    #                         to_add.append(j)
-    #             output.append(to_add)
-
-    #         counter+=1
-    def flatten(l): #copied from http://rightfootin.blogspot.com/2006/09/more-on-python-flatten.html
-        out = []
-        for item in l:
-            if isinstance(item, (list)):
-                out.extend(flatten(item))
             else:
-                out.append(item)
-        return out
-    a = flatten(output)
-    a = list(dict.fromkeys(a)) #remove duplicates
+                for i in prev_depth_1:
+                    curr_depth=curr_depth+findallhexagoncenter(i,vector)
 
-    return a
+                curr_depth=elim_dupes(curr_depth)
 
+                for j in curr_depth:
+                    if j in prev_depth_1 or prev_depth_2:
+                        curr_depth.remove(j)
+                
+                output.append(curr_depth)
+                prev_depth_2=prev_depth_1
+                prev_depth_1=curr_depth
+
+            counter += 1
+        #             for j in check_list:
+        #                 for k in j:
+        #                     if k not in output[counter-1] or not (0.0, 0.0):
+        #                         to_add.append(k)
+        #         else:
+        #             for j in check_list:
+        #                 if j not in output[counter-1] or output[counter-2]:
+        #                     to_add.append(j)
+        #         output.append(to_add)
+
+        #       counter+=1
+    # def flatten(l): #copied from http://rightfootin.blogspot.com/2006/09/more-on-python-flatten.html
+    #     out = []
+    #     for item in l:
+    #         if isinstance(item, (list)):
+    #             out.extend(flatten(item))
+    #         else:
+    #             out.append(item)
+    #     return out
+    # a = flatten(output)
+    # a = list(dict.fromkeys(a)) #remove duplicates
+
+    return output
+    
 def square(length,centre):  
     #takes in cartesian of origin and length of square
     #Outputs coordinates of opposing ends in square for sketching
@@ -158,7 +172,7 @@ def hexagon(length,centre):
     #Creates points for sketching of hexagon
     output = []
 
-    translation_vector_0 = [length,0]
+    translation_vector_0 = [0.0,length]
     rotation_vector=[]
     
     point_1=(round(centre[0]+translation_vector_0[0],5),round(centre[1]+translation_vector_0[1],5))
@@ -200,3 +214,46 @@ def sketch_add(points_list):
     return output
     
     pass
+
+def hexa_3_findsurr(coord,length):
+    vector=(0.0,length*3)
+    output=[]
+    for i in range(6):
+        translation_vector=vector_rotate(i*60.0, vector)
+        new_centre=(
+            float(round(coord[0]+translation_vector[0],5)),
+            float(round(coord[1]+translation_vector[1],5))
+        )
+        output.append(new_centre)
+    return output
+def hexa_all(centre,length,maxdist,color):
+    output = []
+    search_dist=maxdist+2*length
+    print(search_dist)
+    if color == 3:
+        for i in range(color):
+            if i == 0:
+                search_centre=centre
+            elif i ==1:
+                search_centre=(centre[0]+length*2*0.86603,centre[1]+0.0)
+            elif i==2:
+                search_centre=(centre[0]-length*2*0.86603,centre[1]+0.0)
+            
+            yet_to_search,to_return=[],[]
+            yet_to_search.append(search_centre)
+            to_return.append(search_centre)
+
+            while len(yet_to_search)>0:
+                check=yet_to_search.pop(0)
+                
+                check_list=hexa_3_findsurr(check,length)
+                for j in check_list:
+                    if j in to_return:
+                        pass
+                    else:
+                        dist=math.sqrt((j[0]-centre[0])**2+(j[1]-centre[1])**2)
+                        if dist <= search_dist:
+                            yet_to_search.append(j)
+                            to_return.append(j)
+            output.append(to_return)
+    return output
