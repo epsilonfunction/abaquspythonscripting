@@ -56,10 +56,10 @@ global global_height
 global global_matrix_size
 
 global_length = 150.0   #Length of Polygon
-global_height = 85.0    #Width of Lamellae
+global_height = 25.0    #Width of Lamellae
 global_matrix_size = (1,5) #Depreciated
 
-geomsize=(780.0,450.0,300.0)
+geomsize=(780.0,450.0,150.0)
 maxdist=max(geomsize)
 
 # polygon_centres = polygon_matrix.matrix_centres(
