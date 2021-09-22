@@ -1,2 +1,2 @@
 # abaquspythonscripting
-An analysis of the Python scripts used to generate models and meshs in Abaqus
+Python Scripting for 3D geometry in Regular Hexagonal Tessellation
