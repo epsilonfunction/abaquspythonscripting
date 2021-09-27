@@ -38,6 +38,7 @@ import assem
 import set_ops
 
 import placeholderforset
+import TestLib
 
 #Local Parameters file
 from Parameters import material_parameters as mp, gamma_variant as gv, alpha_variant as av
@@ -273,5 +274,5 @@ assem.assem_rotate('alpha_2-1',90,(1.0,0.0,0.0))
 
 assem.assembly_merge('Interest-1','alpha_2-1','final')
 
-
+TestLib.fn()
 
