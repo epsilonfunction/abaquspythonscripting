@@ -216,16 +216,21 @@ def sketch_add(points_list):
     pass
 
 def hexa_3_findsurr(coord,length):
+
     vector=(0.0,length*3)
     output=[]
     for i in range(6):
         translation_vector=vector_rotate(i*60.0, vector)
+        x_n,y_n=float(coord[0]+translation_vector[0]),float(coord[1]+translation_vector[1])
+
+        new_x,new_y=float("{:.2f}".format(x_n)),float("{:.2f}".format(y_n))
+        
         new_centre=(
-            float(round(coord[0]+translation_vector[0],5)),
-            float(round(coord[1]+translation_vector[1],5))
+            new_x,new_y
         )
         output.append(new_centre)
     return output
+    
 def hexa_all(centre,length,maxdist,color):
     output = []
     search_dist=maxdist+2*length
