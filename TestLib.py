@@ -114,11 +114,63 @@ def fn():
         mdb.models['Model-1'].parts['final'].sets['Gamma-III-T'], sectionName=
         'gamma', thicknessAssignment=FROM_SECTION)
         
+    
+    
     mdb.models['Model-1'].parts['final'].MaterialOrientation(
         additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
-        , axis=AXIS_3, fieldName='', localCsys=
-        mdb.models['Model-1'].parts['final'].datums[9], orientationType=SYSTEM, 
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[9], orientationType=SYSTEM, 
+        region=mdb.models['Model-1'].parts['final'].sets['Alpha_2'], 
+        stackDirection=STACK_ORIENTATION)
+
+    mdb.models['Model-1'].parts['final'].MaterialOrientation(
+        additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[10], orientationType=SYSTEM, 
         region=mdb.models['Model-1'].parts['final'].sets['Gamma-I-M'], 
+        stackDirection=STACK_ORIENTATION)
+
+
+    mdb.models['Model-1'].parts['final'].MaterialOrientation(
+        additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[11], orientationType=SYSTEM, 
+        region=mdb.models['Model-1'].parts['final'].sets['Gamma-I-T'], 
+        stackDirection=STACK_ORIENTATION)
+
+    mdb.models['Model-1'].parts['final'].MaterialOrientation(
+        additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[12], orientationType=SYSTEM, 
+        region=mdb.models['Model-1'].parts['final'].sets['Gamma-II-M'], 
+        stackDirection=STACK_ORIENTATION)
+
+    mdb.models['Model-1'].parts['final'].MaterialOrientation(
+        additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[13], orientationType=SYSTEM, 
+        region=mdb.models['Model-1'].parts['final'].sets['Gamma-II-T'], 
+        stackDirection=STACK_ORIENTATION)
+
+    mdb.models['Model-1'].parts['final'].MaterialOrientation(
+        additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[14], orientationType=SYSTEM, 
+        region=mdb.models['Model-1'].parts['final'].sets['Gamma-III-M'], 
+        stackDirection=STACK_ORIENTATION)
+
+    mdb.models['Model-1'].parts['final'].MaterialOrientation(
+        additionalRotationField='', additionalRotationType=ROTATION_NONE, angle=0.0
+        , axis=AXIS_3, fieldName='', 
+        
+        localCsys=mdb.models['Model-1'].parts['final'].datums[15], orientationType=SYSTEM, 
+        region=mdb.models['Model-1'].parts['final'].sets['Gamma-III-T'], 
         stackDirection=STACK_ORIENTATION)
 
     return
