@@ -82,8 +82,8 @@ def matrix_centres(r,c,length,polygon_type):
             for i in range(6):
                 translation_vector=vector_rotate(30+i*60, vector)
                 new_centre=(
-                    float(round(centre[0]+translation_vector[0],5)),
-                    float(round(centre[1]+translation_vector[1],5))
+                    float(round(centre[0]+translation_vector[0],1)),
+                    float(round(centre[1]+translation_vector[1],1))
                 )
                 vector_list.append(new_centre)
             return vector_list
@@ -175,7 +175,7 @@ def hexagon(length,centre):
     translation_vector_0 = [0.0,length]
     rotation_vector=[]
     
-    point_1=(round(centre[0]+translation_vector_0[0],5),round(centre[1]+translation_vector_0[1],5))
+    point_1=(round(centre[0]+translation_vector_0[0],1),round(centre[1]+translation_vector_0[1],1))
     output.append(point_1)
 
     translation_vector_1 = vector_rotate(60,translation_vector_0)
@@ -183,8 +183,8 @@ def hexagon(length,centre):
     for k in range(5):
         translation_vector_1 = vector_rotate(60,translation_vector_1)
         point_1=(
-            round(point_1[0]+translation_vector_1[0],5),
-            round(point_1[1]+translation_vector_1[1],5)
+            round(point_1[0]+translation_vector_1[0],1),
+            round(point_1[1]+translation_vector_1[1],1)
         )
     
         output.append(point_1)
