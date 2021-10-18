@@ -1,5 +1,3 @@
-import polygon_creation as polygen
-# import poly_para as pp
 
 from abaqus import *
 from abaqusConstants import *
@@ -18,9 +16,12 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
+import polygon_creation as polygen
+# import poly_para as pp
 
 import numpy as np
 import math
+
 #import polygon_creation as poly_gen
 # class polygon_matrix(self):
 #     self.polygon_type=None #string?

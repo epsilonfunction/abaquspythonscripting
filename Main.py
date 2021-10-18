@@ -60,7 +60,7 @@ global_length = 150.0   #half-length of lamellae
 global_height = 25.0    #Width of Lamellae
 global_matrix_size = (1,5) #Depreciated
 
-geomsize=(779.4,450.0,150.0) #Size of polycolony 
+geomsize=(779.4,450.0,150.0) #Size of polycolony in x,z,y format
 maxdist=max(geomsize)
 
 # polygon_centres = polygon_matrix.matrix_centres(
