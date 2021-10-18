@@ -23,7 +23,9 @@ global_height = 25.0    #Width of Lamellae
 geomsize=(779.4,450.0,150.0) #Size of polycolony 
 
 a = Surfaces.top_surf(geomsize,global_length)
+
 b = Surfaces.left_surf_grp(geomsize,global_length,global_height)
+b.append((geomsize[0]/2.0,-1*global_height/2.0,0.0))
 
 def create_surf(part_name, new_surf_name, face_coord):
     #face_coord: type(tuple)
@@ -75,7 +77,5 @@ def setsurf(part_name,surface_name,string_of_surface):
     print("Added "+str(surface_name)+" to "+str(part_name))
     return
 
-# setsurf("Interest","Top_Surface",a)
-setsurf("Interest","Left_Surface",b)
-
-print(b)
+setsurf("final","Top_Surface",a)
+setsurf("final","Left_Surface",b)

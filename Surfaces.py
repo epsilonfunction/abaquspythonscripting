@@ -11,7 +11,7 @@
 # from sketch import *
 # from visualization import *
 # from connectorBehavior import *
-print("working")
+
 from math import cos,sin,radians
 
 def left_surf_grp(rve_size,lam_semi_length,lam_semi_height):
