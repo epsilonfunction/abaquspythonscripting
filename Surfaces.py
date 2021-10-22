@@ -86,10 +86,8 @@ def top_surf(rve_size,lam_semi_width):
     limits=[rve_size[0]/2, rve_size[2],rve_size[1]/2] #in x,y,z format
     
     dx=0.2
-    x_search=lam_semi_width*2.0*cos(radians(30.0))
-    
-    x+=lam_semi_width*cos(radians(30.0))
-    
+    x_search=lam_semi_width*cos(radians(30.0))
+        
     stem=[]
     while x <= limits[0]:
         
@@ -100,40 +98,52 @@ def top_surf(rve_size,lam_semi_width):
         x+=x_search
     # print(stem)
 
-    z_maj_srh,z_min_srh=3.0*lam_semi_width,2.0*lam_semi_width
-    counter=1
+    edge=(limits[0]-dx,y,z)
+    stem.append(edge)
+    quadrants.append(edge)
+
+
+    z_maj_srh = 1.5*lam_semi_width
+
     while z <= limits[2]:
+        
+        z+=z_maj_srh
 
         # majleaf=[]
         for i in stem:
             component = list(i)
-            component[2]+=z_maj_srh*counter
+            component[2]=z
             component = tuple(component)
             # majleaf.append(i)
             quadrants.append(component)
 
-        z+=z_maj_srh
-        counter+=1
-
-    shift=(lam_semi_width*cos(radians(30.0)),0.0, lam_semi_width*sin(radians(30.0)))
-    more_points=[]
-    for i in quadrants:
-        new_points=[]
-        for j in range(3):
-            new_points+=[i[j]+shift[j]]
-        if new_points[0]<limits[0] and new_points[2]<limits[2]:
-            new_points[2]+=dx
-            # new_points.append(z)
-            new_points = tuple(new_points)
-            
-            more_points.append(new_points)
     
-    quadrants = quadrants+more_points
-    prelimit=[p for p in limits]
-    print(prelimit)
-    prelimit[0]-=dx
-    prelimit[2] -= dx
-    quadrants.append(tuple(prelimit))
+    limit_points=[]
+    for i in stem:
+        edge=(i[0],i[1],limits[2]-dx)
+        limit_points.append(edge)
+        quadrants.append(edge)
+
+
+    # shift=(lam_semi_width*cos(radians(30.0)),0.0, lam_semi_width*sin(radians(30.0)))
+    # more_points=[]
+    # for i in quadrants:
+    #     new_points=[]
+    #     for j in range(3):
+    #         new_points+=[i[j]+shift[j]]
+    #     if new_points[0]<limits[0] and new_points[2]<limits[2]:
+    #         new_points[2]+=dx
+    #         # new_points.append(z)
+    #         new_points = tuple(new_points)
+            
+    #         more_points.append(new_points)
+    
+    # quadrants = quadrants+more_points
+    # prelimit=[p for p in limits]
+    # print(prelimit)
+    # prelimit[0]-=dx
+    # prelimit[2] -= dx
+    # quadrants.append(tuple(prelimit))
 
     halves=[]
     for j in quadrants:
@@ -147,7 +157,7 @@ def top_surf(rve_size,lam_semi_width):
 
     all_points=[]
     for k in halves:
-        if k[0] == 0.0:
+        if (k[0] - 0.0) <= 1.0:
             all_points.append(k)
         else:
             k_prime = list(k)
@@ -155,8 +165,7 @@ def top_surf(rve_size,lam_semi_width):
             k_prime=tuple(k_prime)
             all_points.append(k),all_points.append(k_prime)
 
-
-    return all_points
+    return all_points + limit_points
 
 def bot_surf(lam_height):
 
