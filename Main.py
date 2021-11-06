@@ -36,12 +36,15 @@ import SectionAssignment
 import meshing
 import assem
 import set_ops
-
+import Surface_Ops.Main
 import placeholderforset
-import TestLib
 
 #Local Parameters file
-from Parameters import material_parameters as mp, gamma_variant as gv, alpha_variant as av
+import TestCase.peepee
+
+#Local Parameters Folder
+from Parameters.Parameter import material_parameters as mp, gamma_variant as gv, alpha_variant as av
+from Parameters import Preset_Lib as pp_lib, RVE_Surface_Para as Surf_Para, Surface_Main as Surf_Main
 
 #Noneditable
 global polygon_centres  #list
@@ -65,8 +68,8 @@ maxdist=max(geomsize)
 
 # polygon_centres = polygon_matrix.matrix_centres(
 #     1,0,global_length,'hexagon')
-materials = material_creation_and_section.generate_materials(
-    mp,"ORTHO") #parameters fixed
+# materials = material_creation_and_section.generate_materials(
+#     mp,"ORTHO") #parameters fixed
 #print(materials)
 
 new_hexagon_points=polygon_matrix.hexagon(global_length,(0.0,0.0))
@@ -74,7 +77,7 @@ print(new_hexagon_points)
 #polygon_creation.polygon("new",new_hexagon_points,'two',1.0)
 polygon_creation.polygon("new",new_hexagon_points,'three',global_height)
 
-set_ops.create_set("new",(0.0,0.0,0.0),"original")
+set_ops.create_set("new","original",(0.0,0.0,0.0),"region")
 
 base_part=[]
 set_list=[]
@@ -267,12 +270,25 @@ points_alpha2=  [(0.0+alpha_2_layer[0]/2.0,0.0+alpha_2_layer[1]/2.0),
                 (0.0-alpha_2_layer[0]/2.0,0.0+alpha_2_layer[1]/2.0)
             ]
 polygon_creation.polygon('alpha_2',points_alpha2,'three',alpha_2_layer[2])
-set_ops.create_set('alpha_2', (0.0,0.0,0.0), 'Alpha_2')
+set_ops.create_set('alpha_2', 'Alpha_2', (0.0,0.0,0.0), 'region')
 assem.create_instance('alpha_2-1', 'alpha_2')
 assem.assem_rotate('alpha_2-1',90,(1.0,0.0,0.0))
 
 
 assem.assembly_merge('Interest-1','alpha_2-1','final')
 
-TestLib.fn()
+pp_lib.fn()
+
+surface_dict= {
+        'top':Surf_Para.top_surf(geomsize,global_length),
+        'bottom':Surf_Para.bot_surf(global_height),
+        'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
+        'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
+        'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
+        'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
+    }
+
+
+Surf_Main.setallsurf('final',surface_dict)
+
 

@@ -15,17 +15,17 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
-import Surfaces
+from ..Parameters import RVE_Surface_Para as Surf_Para
 
-global_length = 150.0   #half-length of lamellae
-global_height = 25.0    #Width of Lamellae
+# global_length = 150.0   #half-length of lamellae
+# global_height = 25.0    #Width of Lamellae
 
-geomsize=(779.4,450.0,150.0) #Size of polycolony 
+# geomsize=(779.4,450.0,150.0) #Size of polycolony 
 
-a = Surfaces.top_surf(geomsize,global_length)
+# a = Surfaces.top_surf(geocmsize,global_length)
 
-b = Surfaces.left_surf_grp(geomsize,global_length,global_height)
-b.append((geomsize[0]/2.0,-1*global_height/2.0,0.0))
+# b = Surfaces.left_surf_grp(geomsize,global_length,global_height)
+# b.append((geomsize[0]/2.0,-1*global_height/2.0,0.0))
 
 def create_surf(part_name, new_surf_name, face_coord):
     #face_coord: type(tuple)
@@ -77,5 +77,26 @@ def setsurf(part_name,surface_name,string_of_surface):
     print("Added "+str(surface_name)+" to "+str(part_name))
     return
 
-setsurf("final","Top_Surface",a)
-setsurf("final","Left_Surface",b)
+# def fn(part_name,geomsize,global_length,global_height):
+
+#     all_surface_parameters = {
+#         'top':Surf_Para.top_surf(geomsize,global_length),
+#         'bottom':Surf_Para.bot_surf(global_height),
+#         'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
+#         'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
+#         'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
+#         'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
+#     }
+
+#     for i in all_surface_parameters:
+#         setsurf(part_name,str[i],all_surface_parameters[i])
+
+#     return all_surface_parameters
+
+############### SETS BELOW #####################
+"""
+    Not Done Here
+    
+    Done in set_ops
+    
+"""

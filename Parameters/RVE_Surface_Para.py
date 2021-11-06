@@ -60,6 +60,8 @@ def left_surf_grp(rve_size,lam_semi_length,lam_semi_height):
         new_i_1=limits[1]-dx
         to_add=(i[0],new_i_1,i[2])
         last.append(to_add)
+    
+    last.append((rve_size[0]/2.0,-1*global_height/2.0,0.0))
 
     return all_pointsofface+last
 
@@ -216,6 +218,8 @@ def front_surf_grp(rve_size,lam_semi_length,lam_semi_height):
         new_i_1=limits[1]-dx
         to_add=(i[0],new_i_1,i[2])
         last.append(to_add)
+    last.append((0.0,-1*global_height/2.0,rve_size[1]/2.0))
+
 
     return all_pointsofface+last
 

@@ -1,3 +1,9 @@
+#Preset Direction of Directionality in materials.
+#Preset all materials to be under a single set
+#Preset material properties to phases 
+#Standard: Alpha_2
+#Gamma-I to Gamma-III: for all gamma phase
+
 from abaqus import *
 from abaqusConstants import *
 

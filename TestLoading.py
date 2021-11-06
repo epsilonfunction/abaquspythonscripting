@@ -17,14 +17,14 @@ from math import sin,cos,radians
 import Loading.loading as loading
 import Jobs.setjob as setjob
 
-loading_angles=[10.0*i for i in range(9)]
+loading_angles=[5.0*i for i in range(19)]
 
 first_step='Step-1'
 
 loading.create_step(first_step,"Initial")
 
-loading.create_load("Pressure","Top",first_step,"Load-1",1000.0,'final-1')
-loading.create_load("Pressure","Positive(2)",first_step,"Load-2",0.01,'final-1')
+loading.create_load("Pressure","top",first_step,"Load-1",1000.0,'final-1')
+loading.create_load("Pressure","right",first_step,"Load-2",0.01,'final-1')
 
 loading.setBC("Displacement","Fixed",first_step,"BC-1","final-1",0.0,0.0,0.0)
 allforce = {} #dictionary of all forces
