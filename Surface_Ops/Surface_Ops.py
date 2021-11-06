@@ -15,7 +15,7 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
-from ..Parameters import RVE_Surface_Para as Surf_Para
+# from ..Parameters import RVE_Surface_Para as Surf_Para
 
 # global_length = 150.0   #half-length of lamellae
 # global_height = 25.0    #Width of Lamellae

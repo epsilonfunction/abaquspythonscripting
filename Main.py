@@ -36,7 +36,7 @@ import SectionAssignment
 import meshing
 import assem
 import set_ops
-import Surface_Ops.Main
+import Surface_Ops.Surface_Main
 import placeholderforset
 
 #Local Parameters file
@@ -44,7 +44,7 @@ import TestCase.peepee
 
 #Local Parameters Folder
 from Parameters.Parameter import material_parameters as mp, gamma_variant as gv, alpha_variant as av
-from Parameters import Preset_Lib as pp_lib, RVE_Surface_Para as Surf_Para, Surface_Main as Surf_Main
+from Parameters import Preset_Lib as pp_lib, RVE_Surface_Para as Surf_Para
 
 #Noneditable
 global polygon_centres  #list
@@ -289,6 +289,6 @@ surface_dict= {
     }
 
 
-Surf_Main.setallsurf('final',surface_dict)
+Surface_Ops.Surface_Main.setallsurf('final',surface_dict)
 
 

@@ -173,7 +173,7 @@ def bot_surf(lam_height):
 
     bottom=(0.0,-1*lam_height,0.0)
 
-    return mirrored_to_right
+    return bottom
 
 def front_surf_grp(rve_size,lam_semi_length,lam_semi_height):
     
