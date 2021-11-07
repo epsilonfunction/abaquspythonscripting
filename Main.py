@@ -33,19 +33,22 @@ import polygon_matrix
 import polygon_creation
 import clone_parts
 import SectionAssignment
-import meshing
 import assem
 import set_ops
 import Surface_Ops.Surface_Main
 import placeholderforset
 import temp_region_set
 
+#Local Subroutine Folders
+from Meshing import meshing as msh
+
 #Local Parameters file
-import TestCase.peepee
+# import TestCase.peepee
 
 #Local Parameters Folder
 from Parameters.Parameter import material_parameters as mp, gamma_variant as gv, alpha_variant as av
 from Parameters import Preset_Lib as pp_lib, RVE_Surface_Para as Surf_Para
+
 
 #Noneditable
 global polygon_centres  #list
@@ -292,7 +295,4 @@ surface_dict= {
 
 Surface_Ops.Surface_Main.setallsurf('final',surface_dict)
 temp_region_set.setallsurf('final',surface_dict,'surface')
-
-
-
 

@@ -12,12 +12,12 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
-def meshing(part_name,findAt_length):
+def meshing(part_name,coord,element_shape,element_technique):
 
     mdb.models['Model-1'].parts[part_name].setMeshControls(
         
-        elemShape=QUAD,
-        technique=STRUCTURED,
+        elemShape=element_shape,
+        technique=element_technique,
 
         regions=mdb.models['Model-1'].parts[part_name].faces.findAt(
             (

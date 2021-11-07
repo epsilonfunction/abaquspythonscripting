@@ -41,9 +41,9 @@ def create_set(part_name,new_set_name,coords,set_type):
             name=new_set_name
             )
     elif set_type=='surface':
-        mdb.models['Model-1'].parts[part_name].set(
+        mdb.models['Model-1'].parts[part_name].Set(
         
-            side1Faces=mdb.models['Model-1'].parts[part_name].faces.findAt(
+            faces=mdb.models['Model-1'].parts[part_name].faces.findAt(
                 (coords, )
             ),
             name=new_set_name
