@@ -1,19 +1,19 @@
-from abaqus import *
-from abaqusConstants import *
+# from abaqus import *
+# from abaqusConstants import *
 
-from part import *
-from material import *
-from section import *
-from assembly import *
-from step import *
-from interaction import *
-from load import *
-from mesh import *
-from optimization import *
-from job import *
-from sketch import *
-from visualization import *
-from connectorBehavior import *
+# from part import *
+# from material import *
+# from section import *
+# from assembly import *
+# from step import *
+# from interaction import *
+# from load import *
+# from mesh import *
+# from optimization import *
+# from job import *
+# from sketch import *
+# from visualization import *
+# from connectorBehavior import *
 
 # from ..Parameters import RVE_Surface_Para as Surf_Para
 import Surface_Ops 
@@ -31,5 +31,4 @@ def setallsurf(part_name,all_surface_parameters):
 
     for i in all_surface_parameters:
         Surface_Ops.setsurf(part_name,i,all_surface_parameters[i])
-        print(i+' done')
     return

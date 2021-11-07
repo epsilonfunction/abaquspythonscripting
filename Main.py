@@ -38,6 +38,7 @@ import assem
 import set_ops
 import Surface_Ops.Surface_Main
 import placeholderforset
+import temp_region_set
 
 #Local Parameters file
 import TestCase.peepee
@@ -281,15 +282,17 @@ pp_lib.fn()
 
 surface_dict= {
         'top':Surf_Para.top_surf(geomsize,global_length,global_height),
-        'bottom':Surf_Para.bot_surf(geomsize,global_length,global_height)
-        # 'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
-        # 'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
-        # 'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
-        # 'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
+        'bottom':Surf_Para.bot_surf(geomsize,global_length,global_height),
+        'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
+        'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
+        'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
+        'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
     }
-# print(surface_dict["left"])
-# print(surface_dict["front"])
-# print(surface_dict["top"])
+
+
 Surface_Ops.Surface_Main.setallsurf('final',surface_dict)
+temp_region_set.setallsurf('final',surface_dict,'surface')
+
+
 
 
