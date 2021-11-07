@@ -280,15 +280,16 @@ assem.assembly_merge('Interest-1','alpha_2-1','final')
 pp_lib.fn()
 
 surface_dict= {
-        'top':Surf_Para.top_surf(geomsize,global_length),
-        'bottom':Surf_Para.bot_surf(global_height),
-        'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
-        'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
-        'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
-        'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
+        'top':Surf_Para.top_surf(geomsize,global_length,global_height),
+        'bottom':Surf_Para.bot_surf(geomsize,global_length,global_height)
+        # 'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
+        # 'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
+        # 'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
+        # 'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
     }
-
-
+# print(surface_dict["left"])
+# print(surface_dict["front"])
+# print(surface_dict["top"])
 Surface_Ops.Surface_Main.setallsurf('final',surface_dict)
 
 

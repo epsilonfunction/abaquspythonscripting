@@ -30,6 +30,6 @@ def setallsurf(part_name,all_surface_parameters):
 #     }
 
     for i in all_surface_parameters:
-        Surface_Ops.setsurf(part_name,str[i],all_surface_parameters[i])
-
+        Surface_Ops.setsurf(part_name,i,all_surface_parameters[i])
+        print(i+' done')
     return

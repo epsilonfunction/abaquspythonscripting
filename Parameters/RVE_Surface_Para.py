@@ -14,9 +14,9 @@
 
 from math import cos,sin,radians
 
-def left_surf_grp(rve_size,lam_semi_length,lam_semi_height):
+def left_surf_grp(rve_size,lam_semi_length,lam_height):
 
-    x,y,z = rve_size[0]/2.0,lam_semi_height/2.0,0.0
+    x,y,z = rve_size[0]/2.0,lam_height/2.0,0.0
     dx = 0.2
     roots=(x,y,z)
     
@@ -42,7 +42,7 @@ def left_surf_grp(rve_size,lam_semi_length,lam_semi_height):
             face=(i[0],y,i[2])
             positive_half.append(face)
 
-        y+=lam_semi_height
+        y+=lam_height
  
 
     all_pointsofface = []
@@ -61,13 +61,13 @@ def left_surf_grp(rve_size,lam_semi_length,lam_semi_height):
         to_add=(i[0],new_i_1,i[2])
         last.append(to_add)
     
-    last.append((rve_size[0]/2.0,-1*global_height/2.0,0.0))
+    last.append((rve_size[0]/2.0,-1*lam_height/2.0,0.0))
 
     return all_pointsofface+last
 
-def right_surf_grp(rve_size,lam_semi_length,lam_semi_height):
+def right_surf_grp(rve_size,lam_semi_length,lam_height):
 
-    all_lefts=left_surf_grp(rve_size,lam_semi_length,lam_semi_height)
+    all_lefts=left_surf_grp(rve_size,lam_semi_length,lam_height)
 
     mirrored_to_right=[]
 
@@ -79,13 +79,13 @@ def right_surf_grp(rve_size,lam_semi_length,lam_semi_height):
 
              
 
-def top_surf(rve_size,lam_semi_width):
+def top_surf(rve_size,lam_semi_width,lam_height):
     
     x,y,z = 0.0,rve_size[2],0.0
     roots=(x,y,z)
     quadrants=[roots]
 
-    limits=[rve_size[0]/2, rve_size[2],rve_size[1]/2] #in x,y,z format
+    limits=[rve_size[0]/2.0, rve_size[2],rve_size[1]/2.0] #in x,y,z format
     
     dx=0.2
     x_search=lam_semi_width*cos(radians(30.0))
@@ -169,15 +169,20 @@ def top_surf(rve_size,lam_semi_width):
 
     return all_points + limit_points
 
-def bot_surf(lam_height):
+def bot_surf(rve_size,lam_semi_width,lam_height):
 
-    bottom=(0.0,-1*lam_height,0.0)
+    all_top=top_surf(rve_size,lam_semi_width,lam_height)    
+    bottom=[]
+    for i in all_top:
+        to_add=list(i)
+        to_add[1]=-1.0*lam_height
+        bottom.append(to_add)
 
     return bottom
 
-def front_surf_grp(rve_size,lam_semi_length,lam_semi_height):
+def front_surf_grp(rve_size,lam_semi_length,lam_height):
     
-    x,y,z = 0.0,lam_semi_height/2.0,rve_size[1]/2.0
+    x,y,z = 0.0,lam_height/2.0,rve_size[1]/2.0
     dx = 0.2
     roots=(x,y,z)
 
@@ -201,7 +206,7 @@ def front_surf_grp(rve_size,lam_semi_length,lam_semi_height):
             positive_half.append(face)
         
 
-        y+=lam_semi_height
+        y+=lam_height
 
     all_pointsofface = []
 
@@ -218,14 +223,14 @@ def front_surf_grp(rve_size,lam_semi_length,lam_semi_height):
         new_i_1=limits[1]-dx
         to_add=(i[0],new_i_1,i[2])
         last.append(to_add)
-    last.append((0.0,-1*global_height/2.0,rve_size[1]/2.0))
+    last.append((0.0,-1*lam_height/2.0,rve_size[1]/2.0))
 
 
     return all_pointsofface+last
 
-def back_surf_grp(rve_size,lam_semi_length,lam_semi_height):
+def back_surf_grp(rve_size,lam_semi_length,lam_height):
 
-    front=front_surf_grp(rve_size,lam_semi_length,lam_semi_height)
+    front=front_surf_grp(rve_size,lam_semi_length,lam_height)
 
     back = []
 
