@@ -71,3 +71,8 @@ def assembly_cut(instance_cutter,instance_tocut,new_part_name):
         
         originalInstances=DELETE
     )
+
+def delete_instance(instance_name):
+    
+    del mdb.models['Model-1'].rootAssembly.features[instance_name]
+    
