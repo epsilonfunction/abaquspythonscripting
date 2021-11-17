@@ -40,6 +40,7 @@ import Surface_Ops.Surface_Main
 import placeholderforset
 import temp_region_set
 import delete_ops as delete_ops
+import tempsix
 #Local Subroutine Folders
 from Meshing import meshing as msh
 
@@ -109,20 +110,29 @@ for i in range(len(polygon_centres)):
                                     
     polygon_centres_dict[i]=layer_2_dict
 
-first_bool=0
+first_bool,overall_counter=0,0
 main_name=0
 parts_list=[]
 prev_master_name,new_master_name,slave_name='null','null','null'
 for i in polygon_centres_dict:
     for j in polygon_centres_dict[i]:
-        print(j,polygon_centres_dict[i][j],first_bool)
+        
+        prev_master_name=new_master_name
+        print(j,polygon_centres_dict[i][j])
+
+        toadd_part=tempsix.tempfull(
+            geomsize,global_height,j,polygon_centres_dict[i][j]
+        )        
         
         slave_name="to_add"
-        prev_master_name=new_master_name
-        
-        polygon_creation.polygon(
-            slave_name,polygon_centres_dict[i][j],'three',global_height
-        )
+        mdb.models['Model-1'].parts.changeKey(
+                fromName=toadd_part,
+                toName=slave_name
+            )
+
+        # polygon_creation.polygon(
+        #     slave_name,polygon_centres_dict[i][j],'three',global_height
+        # )
         
         
         if first_bool==0:
@@ -140,16 +150,80 @@ for i in polygon_centres_dict:
             new_master_name='main'+str(main_name)
             
             assem.create_instance('to_add','to_add')
+            
             assem.translate('to_add',(0.0,0.0,int(i)*2.0*global_height))
             assem.assembly_merge(prev_master_name+'-1',"to_add",new_master_name)
             
             delete_ops.delete(prev_master_name,'part')
-        
+            delete_ops.delete('to_add','part')
+            
         main_name=binary_set(main_name)
+        overall_counter+=1
 
-delete_ops.delete("to_add",'part')
 print(new_master_name)
+new_master_instance=new_master_name+'-1'
+
+working_part,working_instance=[new_master_name],[new_master_instance]
+major_dist=maxdist*2.0
+major_dist=max(major_dist,1000.0)
+
+points_major=[(0.0+major_dist,0.0+major_dist),(0.0+major_dist,0.0-major_dist),
+             (0.0-major_dist,0.0-major_dist),(0.0-major_dist,0.0+major_dist)]
+points_minor=[(0.0+geomsize[0]/2.0,0.0+geomsize[1]/2.0),
+                (0.0+geomsize[0]/2.0,0.0-geomsize[1]/2.0),
+                (0.0-geomsize[0]/2.0,0.0-geomsize[1]/2.0),
+                (0.0-geomsize[0]/2.0,0.0+geomsize[1]/2.0)]
+
+#Truncating our model where needed with sufficiently large mold
+polygon_creation.polygon('major',points_major,'three',major_dist*2.0)
+polygon_creation.polygon('minor',points_minor,'three',geomsize[2])
+
+assem.create_instance('major','major')
+assem.create_instance('minor','minor')
+
+assem.translate('major',(0.0,0.0,-1.0*major_dist))
+assem.translate('minor',(0.0,0.0,-1.0*geomsize[2]))
+assem.translate(new_master_instance,(0.0,0.0,12.0*global_height))
+
+assem.assembly_cut('minor','major','mold')
+working_part+=['minor','major','mold']
+working_instance.append('mold-1')
+
+assem.assem_rotate(working_instance[0],90.0,(1.0,0.0,0.0))
+assem.assem_rotate(working_instance[1],90.0,(1.0,0.0,0.0))
+
+assem.assembly_cut(working_instance[1],working_instance[0],'Interest')
+working_part.append('Interest')
+working_instance.append('Interest-1')
+
+#Adding Alpha2 layer
+alpha_2_layer=geomsize[:2]+(global_height, )
+points_alpha2=  [(0.0+alpha_2_layer[0]/2.0,0.0+alpha_2_layer[1]/2.0),
+                (0.0+alpha_2_layer[0]/2.0,0.0-alpha_2_layer[1]/2.0),
+                (0.0-alpha_2_layer[0]/2.0,0.0-alpha_2_layer[1]/2.0),
+                (0.0-alpha_2_layer[0]/2.0,0.0+alpha_2_layer[1]/2.0)
+            ]
+polygon_creation.polygon('alpha_2',points_alpha2,'three',alpha_2_layer[2])
+set_ops.create_set('alpha_2', 'Alpha_2', (0.0,0.0,0.0), 'region')
+assem.create_instance('alpha_2-1', 'alpha_2')
+assem.assem_rotate('alpha_2-1',90,(1.0,0.0,0.0))
 
 
-        
-        
+assem.assembly_merge('Interest-1','alpha_2-1','final')
+
+pp_lib.fn()
+
+surface_dict= {
+        'top':Surf_Para.top_surf(geomsize,global_length,global_height),
+        'bottom':Surf_Para.bot_surf(geomsize,global_length,global_height),
+        'left':Surf_Para.left_surf_grp(geomsize,global_length,global_height),
+        'right':Surf_Para.right_surf_grp(geomsize,global_length,global_height),
+        'front':Surf_Para.front_surf_grp(geomsize,global_length,global_height),
+        'back':Surf_Para.back_surf_grp(geomsize,global_length,global_height)
+    }
+
+
+Surface_Ops.Surface_Main.setallsurf('final',surface_dict)
+temp_region_set.setallsurf('final',surface_dict,'surface')
+
+print(working_part)

@@ -152,11 +152,23 @@ def tempfull(rve_size,global_height,points_centre,points_list):
         counter += 1.0
     
     delete_ops.delete(slave_part,'part')
+    delete_ops.delete(new_master_inst,'instance')
+    return new_master_part
 
-    return part_name
 
 
 
+# tempsix(
+#     (519.61, 450.0),
+#     [   (519.6, 600.0), 
+#         (389.7, 525.0), 
+#         (389.7, 375.0), 
+#         (519.6, 300.0), 
+#         (649.5, 375.0), 
+#         (649.5, 525.0)
+#     ], 25.0
+    
+# )
 # tempfull(
     
 #     (779.4,450.0,150.0),
