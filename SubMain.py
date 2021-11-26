@@ -47,6 +47,13 @@ from Meshing import meshing as msh
 #Local Parameters file
 # import TestCase.peepee
 
+#RECORD WORK DONE
+session.journalOptions.setValues(
+    replayGeometry=COORDINATE, 
+    recoverGeometry=COORDINATE
+)
+
+
 #Local Parameters Folder
 from Parameters.Parameter import material_parameters as mp, gamma_variant as gv, alpha_variant as av
 from Parameters import Preset_Lib as pp_lib, RVE_Surface_Para as Surf_Para
