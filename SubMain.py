@@ -257,6 +257,13 @@ while lengthcount <= geomsize[2]:
             TM.mesh_control('final',p)
             
     lengthcount+=global_height
+for i in top_list:
+    p=[]
+    for k in i:
+        p.append(k)
+    p[1]=(-1.0*(global_height/2.0))
+    p = tuple(p)
+    TM.mesh_control('final',p)
 
 TM.seeding('final',0.1,0.1,25)
 TM.gen_mesh('final')

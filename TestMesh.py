@@ -25,12 +25,13 @@ def mesh_control(part_name,coords):
         # FREE: Free mesh technique.
         # STRUCTURED: Structured mesh technique.
         # SWEEP: Sweep mesh technique.
-        # SYSTEM_ASSIGN: Allow the system to assign a suitable technique. The actual technique assigned can be STRUCTURED, SWEEP, or “unmeshable.”
+        # SYSTEM_ASSIGN: Allow the system to assign a suitable technique. 
+            # The actual technique assigned can be STRUCTURED, SWEEP, or unmeshable.
     
     mdb.models['Model-1'].parts[part_name].setMeshControls(
         
         elemShape=TET,      #Future Variable
-        technique=SWEEP,    #Future Variable
+        technique=FREE,     #Future Variable
 
         regions=mdb.models['Model-1'].parts[part_name].cells.findAt(
                 (coords, )
@@ -52,21 +53,36 @@ def element_control(part_name,coords,coord_type):
         
         elemTypes=(
             ElemType(
-                elemCode=CPS8R, 
+                elemCode=C3D10, 
                 elemLibrary=STANDARD
             ),
 
-            ElemType(
-                elemCode=CPS6M,
-                elemLibrary=STANDARD)
-            ), 
-        
+        ),
         regions=(
             mdb.models['Model-1'].parts[part_name].faces.findAt(
                 (coords, )
             ),
         )
     )
+    # mdb.models['Model-1'].parts[part_name].setElementType(
+        
+    #     elemTypes=(
+    #         ElemType(
+    #             elemCode=CPS8R, 
+    #             elemLibrary=STANDARD
+    #         ),
+
+    #         ElemType(
+    #             elemCode=CPS6M,
+    #             elemLibrary=STANDARD)
+    #         ), 
+        
+    #     regions=(
+    #         mdb.models['Model-1'].parts[part_name].faces.findAt(
+    #             (coords, )
+    #         ),
+    #     )
+    # )
     
 def seeding(part_name,deviation,minsize,seedsize):
     mdb.models['Model-1'].parts[part_name].seedPart(
