@@ -46,5 +46,7 @@ for j in loading_angles[1:]:
     
     job_name="Biaxial_Loading_1000N_"+str(int(j))+"degrees"
     print(job_name)
+    setjob.inp_only(job_name)
     setjob.create_job(job_name)
     # setjob.submit_job(job_name)
+    setjob.wait_till_complete(job_name)

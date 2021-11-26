@@ -12,6 +12,9 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
+def inp_only(job_name):
+    mdb.jobs[job_name].writeInput()
+
 def create_job(job_name):
     mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
     explicitPrecision=DOUBLE_PLUS_PACK, getMemoryFromAnalysis=True, 
@@ -41,3 +44,6 @@ def submit_job(job_name):
         consistencyChecking=OFF
     )
     return
+
+def wait_till_complete(job_name):
+    mdb.jobs[job_name].waitForCompletion()
