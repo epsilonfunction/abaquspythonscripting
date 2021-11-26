@@ -12,7 +12,7 @@ from sketch import *
 from visualization import *
 from connectorBehavior import *
 
-def meshing(part_name,coord,element_shape,element_technique):
+def meshing_1(part_name,coord,element_shape,element_technique):
 
     mdb.models['Model-1'].parts[part_name].setMeshControls(
         
@@ -25,7 +25,9 @@ def meshing(part_name,coord,element_shape,element_technique):
             )
         ) 
     )
-    
+    return
+
+def meshing_2(part_name,coord,element_shape,element_technique):
     mdb.models['Model-1'].parts[part_name].setElementType(
         
         elemTypes=(

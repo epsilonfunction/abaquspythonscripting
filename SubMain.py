@@ -186,7 +186,7 @@ assem.translate('minor',(0.0,0.0,-1.0*geomsize[2]))
 assem.translate(new_master_instance,(0.0,0.0,12.0*global_height))
 
 assem.assembly_cut('minor','major','mold')
-working_part+=['minor','major','mold']
+working_part+=['minor','major','mold','alpha_2','final']
 working_instance.append('mold-1')
 
 assem.assem_rotate(working_instance[0],90.0,(1.0,0.0,0.0))
@@ -211,6 +211,12 @@ assem.assem_rotate('alpha_2-1',90,(1.0,0.0,0.0))
 
 assem.assembly_merge('Interest-1','alpha_2-1','final')
 
+print(working_part)
+for i in working_part:
+    if i != 'final':
+        delete_ops.delete(i,'part')
+print(working_part)
+
 pp_lib.fn()
 
 surface_dict= {
@@ -226,4 +232,31 @@ surface_dict= {
 Surface_Ops.Surface_Main.setallsurf('final',surface_dict)
 temp_region_set.setallsurf('final',surface_dict,'surface')
 
-print(working_part)
+import TestMesh as TM
+top_list=surface_dict['top']
+first_bool=0
+lengthcount,dx = 0.0,0.2
+while lengthcount <= geomsize[2]:
+    
+    extra=[]
+    extra.append(lengthcount+dx)
+    
+    if first_bool==0:
+        first_bool+=1
+
+    else:
+        extra.append(lengthcount-dx)
+        
+    for i in top_list:
+        for j in extra:
+            p = []
+            for k in i:
+                p.append(k)
+            p[1]=j
+            p = tuple(p)
+            TM.mesh_control('final',p)
+            
+    lengthcount+=global_height
+
+TM.seeding('final',0.1,0.1,25)
+TM.gen_mesh('final')
