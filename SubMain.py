@@ -274,3 +274,7 @@ for i in top_list:
 
 TM.seeding('final',0.1,0.1,25)
 TM.gen_mesh('final')
+
+import TestLoading1 as TL1
+
+TL1.TL1(global_height)
